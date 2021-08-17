@@ -1,3 +1,3 @@
 export const Colors = {
-  brown: '#8f4615'
+  brown: '#612f00'
 }
