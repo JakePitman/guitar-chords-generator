@@ -40,8 +40,6 @@ const styles = StyleSheet.create({
   },
   nextChordContainer: {
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: 'green'
   },
   nextPrompt: {
     fontSize: 20,
