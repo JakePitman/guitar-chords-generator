@@ -13,21 +13,26 @@ const TabNavigator = createBottomTabNavigator({
   Main: { 
     screen: MainScreen,
     navigationOptions: {
-      tabBarIcon: <FontAwesome5 name="guitar" size={24} color="black" /> 
+      tabBarIcon: ({focused, tintColor}) => <FontAwesome5 name="guitar" size={24} color={tintColor}/>
     }
   },
   Chords: { 
     screen: ChordsScreen,
     navigationOptions: {
-      tabBarIcon: <FontAwesome name="th-list" size={24} color="black" />
+      tabBarIcon: ({focused, tintColor}) => <FontAwesome name="th-list" size={24} color={tintColor}/>
     }
   },
   Beat: { 
     screen: BeatScreen,
     navigationOptions: {
-      tabBarIcon: <Ionicons name="musical-note" size={24} color="black" />
+      tabBarIcon: ({focused, tintColor}) => <Ionicons name="musical-note" size={24} color={tintColor}/>
     }
-  },
+  }
+}, {
+  tabBarOptions: {
+    activeBackgroundColor: '#8f4615',
+    activeTintColor: 'white'
+  }
 });
 
 const Navigator = createAppContainer(TabNavigator)
