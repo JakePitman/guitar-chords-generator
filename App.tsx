@@ -8,26 +8,33 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import MainScreen from "./screens/MainScreen"
 import ChordsScreen from "./screens/ChordsScreen"
 import BeatScreen from "./screens/BeatScreen"
+import { Colors } from "./shared/styles"
 
 const TabNavigator = createBottomTabNavigator({
   Main: { 
     screen: MainScreen,
     navigationOptions: {
-      tabBarIcon: <FontAwesome5 name="guitar" size={24} color="black" /> 
+      tabBarIcon: ({focused, tintColor}) => <FontAwesome5 name="guitar" size={24} color={tintColor}/>
     }
   },
   Chords: { 
     screen: ChordsScreen,
     navigationOptions: {
-      tabBarIcon: <FontAwesome name="th-list" size={24} color="black" />
+      tabBarIcon: ({focused, tintColor}) => <FontAwesome name="th-list" size={24} color={tintColor}/>
     }
   },
   Beat: { 
     screen: BeatScreen,
     navigationOptions: {
-      tabBarIcon: <Ionicons name="musical-note" size={24} color="black" />
+      tabBarIcon: ({focused, tintColor}) => <Ionicons name="musical-note" size={24} color={tintColor}/>
     }
-  },
+  }
+}, {
+  tabBarOptions: {
+    activeBackgroundColor: Colors.brown,
+    activeTintColor: 'white',
+    inactiveTintColor: Colors.brown
+  }
 });
 
 const Navigator = createAppContainer(TabNavigator)
