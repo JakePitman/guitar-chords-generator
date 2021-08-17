@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Colors } from '../shared/styles'
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const MainScreen = () => {
   return (
@@ -14,7 +14,7 @@ const MainScreen = () => {
         <Image style={styles.nextChord} source={require("../assets/A_major.png")}/>
       </View>
       <View style={styles.bottomContent}>
-        <FontAwesome name="pause" size={60} color={Colors.brown}/>
+        <Feather name="pause" size={80} color={Colors.brown}/>
       </View>
     </View>
   )
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
    backgroundColor: Colors.brown,
    alignItems: 'center',
    // TODO: use safe space instead
-   paddingTop: 30
+   paddingTop: 30,
   },
   topBannerText: {
     color: Colors.beige,
