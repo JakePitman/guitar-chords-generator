@@ -14,7 +14,7 @@ const MainScreen = () => {
         <Image style={styles.nextChord} source={require("../assets/A_major.png")}/>
       </View>
       <View style={styles.bottomContent}>
-        <FontAwesome name="pause" size={60} color="black" />
+        <FontAwesome name="pause" size={60} color={Colors.brown}/>
       </View>
     </View>
   )
