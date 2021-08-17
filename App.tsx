@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import MainScreen from "./screens/MainScreen"
 import ChordsScreen from "./screens/ChordsScreen"
 import BeatScreen from "./screens/BeatScreen"
+import { Colors } from "./shared/styles"
 
 const TabNavigator = createBottomTabNavigator({
   Main: { 
@@ -30,7 +31,7 @@ const TabNavigator = createBottomTabNavigator({
   }
 }, {
   tabBarOptions: {
-    activeBackgroundColor: '#8f4615',
+    activeBackgroundColor: Colors.brown,
     activeTintColor: 'white'
   }
 });
