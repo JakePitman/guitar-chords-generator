@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: Colors.beige
   },
   topBanner: {
    width: '100%',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
    paddingTop: 30
   },
   topBannerText: {
-    color: 'white',
+    color: Colors.beige,
     fontSize: 40
   },
   nextChordContainer: {
