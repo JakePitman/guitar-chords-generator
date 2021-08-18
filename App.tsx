@@ -11,7 +11,7 @@ import BeatScreen from "./screens/BeatScreen"
 import { Colors } from "./shared/styles"
 import Chords from  './shared/chords'
 
-const selectedChords = Chords.filter(chordData => chordData.name === 'AM')
+const selectedChords = Chords.filter(chordData => chordData.name === 'AM' || chordData.name === 'Am' || chordData.name === 'FM')
 
 const TabNavigator = createBottomTabNavigator({
   Main: { 
