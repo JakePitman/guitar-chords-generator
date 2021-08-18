@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +8,10 @@ type Props = {
 }
 
 const MainScreen = ({chords}: Props) => {
+  const [nextChord, setNextChord] = useState(
+    chords[Math.floor(Math.random()*chords.length)]
+  )
+
   return (
     <View style={styles.container}>
       <View style={styles.topBanner}>
@@ -15,7 +19,7 @@ const MainScreen = ({chords}: Props) => {
       </View>
       <View style={styles.nextChordContainer}>
         <Text style={styles.nextPrompt}>Next:</Text>
-        <Image style={styles.nextChord} source={chords[0].path}/>
+        <Image style={styles.nextChord} source={nextChord.path}/>
       </View>
       <View style={styles.bottomContent}>
         <Feather name="pause" size={80} color={Colors.brown}/>
