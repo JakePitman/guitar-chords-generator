@@ -9,10 +9,13 @@ import MainScreen from "./screens/MainScreen"
 import ChordsScreen from "./screens/ChordsScreen"
 import BeatScreen from "./screens/BeatScreen"
 import { Colors } from "./shared/styles"
+import Chords from  './shared/chords'
+
+const selectedChords = Chords.filter(chordData => chordData.name === 'AM')
 
 const TabNavigator = createBottomTabNavigator({
   Main: { 
-    screen: MainScreen,
+    screen: () => <MainScreen chords={selectedChords}/>,
     navigationOptions: {
       tabBarIcon: ({focused, tintColor}) => <FontAwesome5 name="guitar" size={24} color={tintColor}/>
     }
