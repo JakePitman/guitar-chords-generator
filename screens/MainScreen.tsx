@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
 
+type Chord = {
+  name: string,
+  path: number 
+}
+
 type Props = {
-  chords: { name: string, path: number }[]
+  chords: Chord[]
 }
 
 const MainScreen = ({chords}: Props) => {
   const [nextChord, setNextChord] = useState(
     chords[Math.floor(Math.random()*chords.length)]
   )
+  const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
+
+  useEffect(() => {
+    setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
+  }, [nextChord])
 
   return (
     <View style={styles.container}>
