@@ -3,7 +3,11 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
 
-const MainScreen = () => {
+type Props = {
+  chords: { name: string, path: number }[]
+}
+
+const MainScreen = ({chords}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBanner}>
@@ -11,7 +15,7 @@ const MainScreen = () => {
       </View>
       <View style={styles.nextChordContainer}>
         <Text style={styles.nextPrompt}>Next:</Text>
-        <Image style={styles.nextChord} source={require("../assets/A_major.png")}/>
+        <Image style={styles.nextChord} source={chords[0].path}/>
       </View>
       <View style={styles.bottomContent}>
         <Feather name="pause" size={80} color={Colors.brown}/>
