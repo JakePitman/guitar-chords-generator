@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
 
@@ -17,6 +17,7 @@ const MainScreen = ({chords}: Props) => {
     chords[Math.floor(Math.random()*chords.length)]
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
+  const [isPlaying, setIsPlaying] = useState(false)
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
@@ -32,7 +33,13 @@ const MainScreen = ({chords}: Props) => {
         <Image style={styles.nextChord} source={nextChord.path}/>
       </View>
       <View style={styles.bottomContent}>
-        <Feather name="pause" size={80} color={Colors.brown}/>
+        <TouchableOpacity onPress={() => setIsPlaying((current) => !current)}>
+          {
+            isPlaying ?
+            <Feather name="pause" size={80} color={Colors.brown}/> :
+            <Feather name="play" size={80} color={Colors.brown}/>
+          }
+        </TouchableOpacity>
       </View>
     </View>
   )
