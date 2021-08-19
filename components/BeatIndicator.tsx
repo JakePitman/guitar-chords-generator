@@ -9,7 +9,7 @@ type Props = {
 
 const BeatIndicator = ({active}: Props) => {
   return (
-    <View style={styles.container}></View>
+    <View style={{ ...styles.container, ...active ? styles.active : {} }}></View>
   )
 }
 
@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.brown,
     borderWidth: 1,
     borderRadius: 3
+  },
+  active: {
+    backgroundColor: Colors.brown
   }
 })
 
