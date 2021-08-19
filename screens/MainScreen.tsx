@@ -30,6 +30,9 @@ const MainScreen = ({chords}: Props) => {
     const nextEmptyBeat = beats.indexOf(false)
     if (nextEmptyBeat === -1) {
       setBeats([true, false, false, false])
+      setNextChord(
+        possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
+      )
       return
     }
     const newBeats = beats.map(beat => beat)
