@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
 
+import BeatIndicator from "../components/BeatIndicator"
+
 type Chord = {
   name: string,
   path: number 
@@ -10,18 +12,43 @@ type Chord = {
 
 type Props = {
   chords: Chord[]
+  finalBeat: number
 }
 
-const MainScreen = ({chords}: Props) => {
+const MainScreen = ({chords, finalBeat}: Props) => {
   const [nextChord, setNextChord] = useState(
     chords[Math.floor(Math.random()*chords.length)]
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [currentBeat, setCurrentBeat] = useState(0)
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
   }, [nextChord])
+
+
+  const updateBeat = () => {
+    if (currentBeat >= finalBeat) {
+      setCurrentBeat(1)
+      setNextChord(
+        possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
+      )
+      return
+    }
+    setCurrentBeat((current) => current + 1)
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      isPlaying && updateBeat()
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [currentBeat, isPlaying]);
+
+  useEffect(() => {
+    !isPlaying && setCurrentBeat(0)
+  }, [isPlaying])
 
   return (
     <View style={styles.container}>
@@ -40,6 +67,13 @@ const MainScreen = ({chords}: Props) => {
             <Feather name="play" size={80} color={Colors.brown}/>
           }
         </TouchableOpacity>
+        <View style={styles.beatIndicatorContainer}>
+          {
+            Array.apply(null, new Array(finalBeat)).map(( _, i ) => 
+              <BeatIndicator active={i < currentBeat} key={i}/>
+            )
+          }
+        </View>
       </View>
     </View>
   )
@@ -68,14 +102,20 @@ const styles = StyleSheet.create({
   },
   nextPrompt: {
     fontSize: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    color: Colors.brown
   },
   nextChord: {
     height: 300,
     width: 270,
   },
   bottomContent: {
-    marginBottom: 20
+    marginBottom: 20,
+    alignItems: 'center'
+  },
+  beatIndicatorContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
   }
 })
 

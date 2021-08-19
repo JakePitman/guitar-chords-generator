@@ -15,7 +15,7 @@ const selectedChords = Chords.filter(chordData => chordData.name === 'AM' || cho
 
 const TabNavigator = createBottomTabNavigator({
   Main: { 
-    screen: () => <MainScreen chords={selectedChords}/>,
+    screen: () => <MainScreen chords={selectedChords} finalBeat={4}/>,
     navigationOptions: {
       tabBarIcon: ({focused, tintColor}) => <FontAwesome5 name="guitar" size={24} color={tintColor}/>
     }
