@@ -9,7 +9,9 @@ type Props = {
 
 const BeatIndicator = ({active}: Props) => {
   return (
-    <View style={{ ...styles.container, ...active ? styles.active : {} }}></View>
+    <View 
+      style={{ ...styles.container, ...active ? styles.active : {} }}
+    ></View>
   )
 }
 

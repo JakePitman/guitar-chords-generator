@@ -59,7 +59,7 @@ const MainScreen = ({chords}: Props) => {
         </TouchableOpacity>
         <View style={styles.beatIndicatorContainer}>
           {
-            beats.map((isActive) => <BeatIndicator active={isActive}/>)
+            beats.map((isActive, i) => <BeatIndicator active={isActive} key={i}/>)
           }
         </View>
       </View>
