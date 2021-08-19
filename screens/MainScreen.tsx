@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
 
+import BeatIndicator from "../components/BeatIndicator"
+
 type Chord = {
   name: string,
   path: number 
@@ -18,6 +20,7 @@ const MainScreen = ({chords}: Props) => {
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [beats, setBeats] = useState([false, false, false, true])
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
@@ -40,6 +43,11 @@ const MainScreen = ({chords}: Props) => {
             <Feather name="play" size={80} color={Colors.brown}/>
           }
         </TouchableOpacity>
+        <View style={styles.beatIndicatorContainer}>
+          {
+            beats.map(() => <BeatIndicator active/>)
+          }
+        </View>
       </View>
     </View>
   )
@@ -75,7 +83,12 @@ const styles = StyleSheet.create({
     width: 270,
   },
   bottomContent: {
-    marginBottom: 20
+    marginBottom: 20,
+    alignItems: 'center'
+  },
+  beatIndicatorContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
   }
 })
 
