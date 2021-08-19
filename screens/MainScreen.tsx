@@ -39,6 +39,13 @@ const MainScreen = ({chords, finalBeat}: Props) => {
     setCurrentBeat((current) => current + 1)
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      isPlaying && updateBeat()
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [currentBeat, isPlaying]);
+
   return (
     <View style={styles.container}>
       <View style={styles.topBanner}>
