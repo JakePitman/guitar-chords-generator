@@ -20,11 +20,22 @@ const MainScreen = ({chords}: Props) => {
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
-  const [beats, setBeats] = useState([false, false, false, true])
+  const [beats, setBeats] = useState([false, false, false, false])
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
   }, [nextChord])
+
+  const nextBeat = () => {
+    const nextEmptyBeat = beats.indexOf(false)
+    if (nextEmptyBeat === -1) {
+      setBeats([true, false, false, false])
+      return
+    }
+    const newBeats = beats.map(beat => beat)
+    newBeats[nextEmptyBeat] = true
+    setBeats(newBeats)
+  }
 
   return (
     <View style={styles.container}>
@@ -45,7 +56,7 @@ const MainScreen = ({chords}: Props) => {
         </TouchableOpacity>
         <View style={styles.beatIndicatorContainer}>
           {
-            beats.map(() => <BeatIndicator active/>)
+            beats.map((isActive) => <BeatIndicator active={isActive}/>)
           }
         </View>
       </View>
