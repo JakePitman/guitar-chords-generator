@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
   },
   nextPrompt: {
     fontSize: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    color: Colors.brown
   },
   nextChord: {
     height: 300,
