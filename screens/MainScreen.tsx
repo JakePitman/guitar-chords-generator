@@ -54,7 +54,7 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBanner}>
-        <Text style={styles.topBannerText}>100bpm</Text>
+        <Text style={styles.topBannerText}>{bpm}bpm</Text>
       </View>
       <View style={styles.nextChordContainer}>
         <Text style={styles.nextPrompt}>Next:</Text>
