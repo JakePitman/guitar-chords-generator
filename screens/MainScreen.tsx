@@ -13,9 +13,10 @@ type Chord = {
 type Props = {
   chords: Chord[]
   finalBeat: number
+  bpm: number
 }
 
-const MainScreen = ({chords, finalBeat}: Props) => {
+const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   const [nextChord, setNextChord] = useState(
     chords[Math.floor(Math.random()*chords.length)]
   )
@@ -42,7 +43,7 @@ const MainScreen = ({chords, finalBeat}: Props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       isPlaying && updateBeat()
-    }, 1000);
+    }, 60000 / bpm);
     return () => clearInterval(interval);
   }, [currentBeat, isPlaying]);
 
