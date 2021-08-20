@@ -61,14 +61,14 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
 
   const updateBeat = () => {
     if (currentBeat >= finalBeat) {
-      playSound(tickFile, setTick)
+      !isMuted && playSound(tickFile, setTick)
       setCurrentBeat(1)
       setNextChord(
         possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
       )
       return
     }
-    playSound(tockFile, setTock)
+    !isMuted && playSound(tockFile, setTock)
     setCurrentBeat((current) => current + 1)
   }
 
