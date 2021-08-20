@@ -27,6 +27,9 @@
     },
     "web": {
       "favicon": "./assets/F_major.png"
-    }
+    },
+    "plugins": [
+      "expo-av"
+    ]
   }
 }

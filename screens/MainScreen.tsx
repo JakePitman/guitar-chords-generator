@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
 import { Feather } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 import BeatIndicator from "../components/BeatIndicator"
 
@@ -23,6 +24,34 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentBeat, setCurrentBeat] = useState(0)
+  const [tock, setTock] = React.useState<any>();
+  const [tick, setTick] = React.useState<any>();
+
+  const tockFile = require('../assets/tock.mp3')
+  const tickFile = require('../assets/tick.mp3')
+
+  async function playSound(file: any, setCallback: React.Dispatch<React.SetStateAction<any>>) {
+    const { sound } = await Audio.Sound.createAsync(
+      file
+    );
+    setCallback(sound);
+
+    await sound.playAsync(); }
+
+  React.useEffect(() => {
+    return tock
+      ? () => {
+          tock.unloadAsync(); }
+      : undefined;
+  }, [tock]);
+
+  React.useEffect(() => {
+    return tick
+      ? () => {
+          tick.unloadAsync(); }
+      : undefined;
+    }, [tick]);
+
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
@@ -31,12 +60,14 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
 
   const updateBeat = () => {
     if (currentBeat >= finalBeat) {
+      playSound(tickFile, setTick)
       setCurrentBeat(1)
       setNextChord(
         possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
       )
       return
     }
+    playSound(tockFile, setTock)
     setCurrentBeat((current) => current + 1)
   }
 
