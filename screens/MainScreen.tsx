@@ -25,21 +25,33 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentBeat, setCurrentBeat] = useState(0)
   const [tock, setTock] = React.useState<any>();
+  const [tick, setTick] = React.useState<any>();
 
-  async function playTock() {
+  const tockFile = require('../assets/tock.mp3')
+  const tickFile = require('../assets/tick.mp3')
+
+  async function playSound(file: any, setCallback: React.Dispatch<React.SetStateAction<any>>) {
     const { sound } = await Audio.Sound.createAsync(
-      require('../assets/tock.mp3')
+      file
     );
-    setTock(sound);
+    setCallback(sound);
 
     await sound.playAsync(); }
 
-    React.useEffect(() => {
-      return tock
-        ? () => {
-            tock.unloadAsync(); }
-        : undefined;
-    }, [tock]);
+  React.useEffect(() => {
+    return tock
+      ? () => {
+          tock.unloadAsync(); }
+      : undefined;
+  }, [tock]);
+
+  React.useEffect(() => {
+    return tick
+      ? () => {
+          tick.unloadAsync(); }
+      : undefined;
+    }, [tick]);
+
 
   useEffect(() => {
     setPossibleNextChords(chords.filter(chord => chord.name !== nextChord.name))
@@ -48,14 +60,14 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
 
   const updateBeat = () => {
     if (currentBeat >= finalBeat) {
-      playTock()
+      playSound(tickFile, setTick)
       setCurrentBeat(1)
       setNextChord(
         possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
       )
       return
     }
-    playTock()
+    playSound(tockFile, setTock)
     setCurrentBeat((current) => current + 1)
   }
 
