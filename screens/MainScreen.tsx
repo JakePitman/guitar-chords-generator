@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
-import { Feather } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 import BeatIndicator from "../components/BeatIndicator"
+import PlaybackControls from "../components/PlaybackControls"
 
 type Chord = {
   name: string,
@@ -93,22 +93,12 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
         <Image style={styles.nextChord} source={nextChord.path}/>
       </View>
       <View style={styles.bottomContent}>
-        <View style={styles.bottomControls}>
-          <TouchableOpacity onPress={() => setIsPlaying((current) => !current)}>
-            {
-              isPlaying ?
-              <Feather name="pause" size={80} color={Colors.brown}/> :
-              <Feather name="play" size={80} color={Colors.brown}/>
-            }
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsMuted((current) => !current)}>
-            {
-              isMuted ?
-              <Feather name="volume-x" size={80} color={Colors.brown}/> :
-              <Feather name="volume-2" size={80} color={Colors.brown}/>
-            }
-          </TouchableOpacity>
-        </View>
+        <PlaybackControls 
+          isMuted={isMuted}
+          setIsMuted={setIsMuted}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
         <View style={styles.beatIndicatorContainer}>
           {
             Array.apply(null, new Array(finalBeat)).map(( _, i ) => 
@@ -154,11 +144,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
     width: '100%',
-  },
-  bottomControls: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
   },
   beatIndicatorContainer: {
     flexDirection: 'row',
