@@ -23,6 +23,7 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
   const [currentBeat, setCurrentBeat] = useState(0)
   const [tock, setTock] = React.useState<any>();
   const [tick, setTick] = React.useState<any>();
@@ -92,13 +93,22 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
         <Image style={styles.nextChord} source={nextChord.path}/>
       </View>
       <View style={styles.bottomContent}>
-        <TouchableOpacity onPress={() => setIsPlaying((current) => !current)}>
-          {
-            isPlaying ?
-            <Feather name="pause" size={80} color={Colors.brown}/> :
-            <Feather name="play" size={80} color={Colors.brown}/>
-          }
-        </TouchableOpacity>
+        <View style={styles.bottomControls}>
+          <TouchableOpacity onPress={() => setIsPlaying((current) => !current)}>
+            {
+              isPlaying ?
+              <Feather name="pause" size={80} color={Colors.brown}/> :
+              <Feather name="play" size={80} color={Colors.brown}/>
+            }
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsMuted((current) => !current)}>
+            {
+              isMuted ?
+              <Feather name="volume-x" size={80} color={Colors.brown}/> :
+              <Feather name="volume-2" size={80} color={Colors.brown}/>
+            }
+          </TouchableOpacity>
+        </View>
         <View style={styles.beatIndicatorContainer}>
           {
             Array.apply(null, new Array(finalBeat)).map(( _, i ) => 
@@ -122,7 +132,6 @@ const styles = StyleSheet.create({
    width: '100%',
    backgroundColor: Colors.brown,
    alignItems: 'center',
-   // TODO: use safe space instead
    paddingTop: 30,
   },
   topBannerText: {
@@ -143,7 +152,13 @@ const styles = StyleSheet.create({
   },
   bottomContent: {
     marginBottom: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
+  },
+  bottomControls: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   beatIndicatorContainer: {
     flexDirection: 'row',
