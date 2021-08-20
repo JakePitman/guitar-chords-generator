@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { Colors } from '../shared/styles'
-import { Feather } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 import BeatIndicator from "../components/BeatIndicator"
+import PlaybackControls from "../components/PlaybackControls"
 
 type Chord = {
   name: string,
@@ -23,6 +23,7 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
   )
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
   const [currentBeat, setCurrentBeat] = useState(0)
   const [tock, setTock] = React.useState<any>();
   const [tick, setTick] = React.useState<any>();
@@ -60,14 +61,14 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
 
   const updateBeat = () => {
     if (currentBeat >= finalBeat) {
-      playSound(tickFile, setTick)
+      !isMuted && playSound(tickFile, setTick)
       setCurrentBeat(1)
       setNextChord(
         possibleNextChords[Math.floor(Math.random()*possibleNextChords.length)]
       )
       return
     }
-    playSound(tockFile, setTock)
+    !isMuted && playSound(tockFile, setTock)
     setCurrentBeat((current) => current + 1)
   }
 
@@ -92,13 +93,12 @@ const MainScreen = ({chords, finalBeat, bpm}: Props) => {
         <Image style={styles.nextChord} source={nextChord.path}/>
       </View>
       <View style={styles.bottomContent}>
-        <TouchableOpacity onPress={() => setIsPlaying((current) => !current)}>
-          {
-            isPlaying ?
-            <Feather name="pause" size={80} color={Colors.brown}/> :
-            <Feather name="play" size={80} color={Colors.brown}/>
-          }
-        </TouchableOpacity>
+        <PlaybackControls 
+          isMuted={isMuted}
+          setIsMuted={setIsMuted}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
         <View style={styles.beatIndicatorContainer}>
           {
             Array.apply(null, new Array(finalBeat)).map(( _, i ) => 
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
    width: '100%',
    backgroundColor: Colors.brown,
    alignItems: 'center',
-   // TODO: use safe space instead
    paddingTop: 30,
   },
   topBannerText: {
@@ -143,7 +142,8 @@ const styles = StyleSheet.create({
   },
   bottomContent: {
     marginBottom: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
   },
   beatIndicatorContainer: {
     flexDirection: 'row',
