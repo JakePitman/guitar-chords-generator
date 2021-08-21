@@ -13,19 +13,20 @@ import { Colors } from "./shared/styles";
 import Chords from "./shared/chords";
 import { storeValue, retrieveValue } from "./storage/storageFunctions";
 
-const selectedChords = Chords.filter(
-  (chordData) =>
-    chordData.name === "AM" ||
-    chordData.name === "Am" ||
-    chordData.name === "FM"
-);
+type ScreenProps = {
+  settings: {
+    bpm: number;
+    finalBeat: number;
+    selectedChordsData: { name: string; path: number }[];
+  };
+};
 
 const TabNavigator = createBottomTabNavigator(
   {
     Main: {
-      screen: () => (
-        <MainScreen chords={selectedChords} finalBeat={4} bpm={120} />
-      ),
+      screen: ({ screenProps }: any) => {
+        return <MainScreen settings={screenProps.settings} />;
+      },
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => (
           <FontAwesome5 name="guitar" size={24} color={tintColor} />
@@ -73,13 +74,31 @@ export default function App() {
     retrieveValue("FINAL_BEAT").then((beat) =>
       setFinalBeat(parseInt(beat as string))
     );
-    retrieveValue("SELECTED_CHORDS").then((chords) =>
-      setSelectedChords(chords?.split(","))
-    );
+    retrieveValue("SELECTED_CHORDS").then((chords) => {
+      // setSelectedChords(chords?.split(","));
+      setSelectedChords(["Am", "AM"]);
+    });
   }, []);
 
   if (bpm && finalBeat && selectedChords) {
-    return <Navigator />;
+    // TODO filter these based on selectedChords in state
+    const selectedChordsData = Chords.filter(
+      (chordData) =>
+        chordData.name === "AM" ||
+        chordData.name === "Am" ||
+        chordData.name === "FM"
+    );
+    return (
+      <Navigator
+        screenProps={{
+          settings: {
+            bpm,
+            finalBeat,
+            selectedChords: selectedChordsData,
+          },
+        }}
+      />
+    );
   }
 
   return (

@@ -29,7 +29,7 @@ export const retrieveValue = async (valueType: ValueType) => {
         case "FINAL_BEAT":
           return "4";
         case "SELECTED_CHORDS":
-          return "";
+          return "AM,Am";
       }
     }
   } catch (error) {

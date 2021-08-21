@@ -13,14 +13,17 @@ type Chord = {
 };
 
 type Props = {
-  chords: Chord[];
-  finalBeat: number;
-  bpm: number;
+  settings: {
+    selectedChords: Chord[];
+    finalBeat: number;
+    bpm: number;
+  };
 };
 
-const MainScreen = ({ chords, finalBeat, bpm }: Props) => {
+const MainScreen = ({ settings }: Props) => {
+  const { bpm, finalBeat, selectedChords } = settings;
   const [nextChord, setNextChord] = useState(
-    chords[Math.floor(Math.random() * chords.length)]
+    selectedChords[Math.floor(Math.random() * selectedChords.length)]
   );
   const [possibleNextChords, setPossibleNextChords] = useState<Chord[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -60,7 +63,9 @@ const MainScreen = ({ chords, finalBeat, bpm }: Props) => {
 
   useEffect(() => {
     setPossibleNextChords(
-      chords.filter((chord) => chord.name !== nextChord.name)
+      selectedChords.filter(
+        (chord: { name: string; path: number }) => chord.name !== nextChord.name
+      )
     );
   }, [nextChord]);
 
