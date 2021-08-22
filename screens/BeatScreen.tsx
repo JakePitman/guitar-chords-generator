@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   StyleSheet,
   View,
@@ -7,7 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+
 import { storeValue } from "../storage/storageFunctions";
+import { Colors } from "../shared/styles";
 
 type Props = {
   appBpm: number;
@@ -23,7 +24,7 @@ const InvalidMessage = ({
   visible: boolean;
   message: string;
 }) => {
-  return <Text>{visible ? message : ""}</Text>;
+  return <Text style={styles.invalidMessage}>{visible ? message : ""}</Text>;
 };
 
 const BeatScreen = ({
@@ -57,39 +58,47 @@ const BeatScreen = ({
 
   return (
     <View style={styles.container}>
-      <TextInput
-        value={bpmInput}
-        onChangeText={(val) => {
-          if (val === "" || !Number.isNaN(parseInt(val))) {
-            setBpmInput(val);
-          }
-        }}
-        keyboardType="numeric"
-        maxLength={3}
-        onFocus={() => {
-          setBpmInputTouched(true);
-        }}
-      />
-      <InvalidMessage
-        visible={bpmInputTouched && !bpmInputIsValid()}
-        message="Must be a number between 50 - 120"
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputTitle}>BPM</Text>
+        <TextInput
+          style={styles.inputField}
+          value={bpmInput}
+          onChangeText={(val) => {
+            if (val === "" || !Number.isNaN(parseInt(val))) {
+              setBpmInput(val);
+            }
+          }}
+          keyboardType="numeric"
+          maxLength={3}
+          onFocus={() => {
+            setBpmInputTouched(true);
+          }}
+        />
+        <InvalidMessage
+          visible={bpmInputTouched && !bpmInputIsValid()}
+          message="Must be a number between 50 - 120"
+        />
+      </View>
 
-      <TextInput
-        value={finalBeatInput}
-        onChangeText={(val) => {
-          if (val === "" || !Number.isNaN(parseInt(val))) {
-            setFinalBeatInput(val);
-          }
-        }}
-        keyboardType="numeric"
-        maxLength={1}
-        onFocus={() => setFinalInputInputTouched(true)}
-      />
-      <InvalidMessage
-        visible={finalBeatInputTouched && !finalBeatInputIsValid()}
-        message="Must be a number between 2 - 9"
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputTitle}>Beats per change</Text>
+        <TextInput
+          style={styles.inputField}
+          value={finalBeatInput}
+          onChangeText={(val) => {
+            if (val === "" || !Number.isNaN(parseInt(val))) {
+              setFinalBeatInput(val);
+            }
+          }}
+          keyboardType="numeric"
+          maxLength={1}
+          onFocus={() => setFinalInputInputTouched(true)}
+        />
+        <InvalidMessage
+          visible={finalBeatInputTouched && !finalBeatInputIsValid()}
+          message="Must be a number between 2 - 9"
+        />
+      </View>
       <TouchableOpacity
         onPress={() => {
           if (bpmInputIsValid() && finalBeatInputIsValid) {
@@ -109,6 +118,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.beige,
+  },
+  inputContainer: {
+    width: "80%",
+    alignItems: "center",
+    textAlign: "center",
+    margin: 20,
+  },
+  inputTitle: {
+    color: Colors.brown,
+    fontSize: 20,
+  },
+  inputField: {
+    color: Colors.brown,
+    textAlign: "center",
+    fontSize: 80,
+    width: "50%",
+    borderColor: Colors.brown,
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 10,
+  },
+  invalidMessage: {
+    color: "crimson",
+    fontWeight: "bold",
   },
 });
 
