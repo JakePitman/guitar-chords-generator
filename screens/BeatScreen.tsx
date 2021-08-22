@@ -59,7 +59,7 @@ const BeatScreen = ({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={Keyboard.dismiss} style={styles.container}>
       <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>BPM</Text>
         <TextInput
@@ -120,14 +120,14 @@ const BeatScreen = ({
         disabled={!bpmInputIsValid() || !finalBeatInputIsValid()}
         style={{
           ...styles.saveButtonContainer,
-          ...(bpmInputIsValid() && finalBeatInputIsValid()
+          ...(bpmInputIsValid() && finalBeatInputIsValid() && !saved
             ? styles.saveButtonContainerActive
             : {}),
         }}
       >
         <Text style={styles.saveButton}>Save</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
