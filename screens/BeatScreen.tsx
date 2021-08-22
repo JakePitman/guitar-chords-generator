@@ -25,6 +25,24 @@ const BeatScreen = ({
   const [bpmInput, setBpmInput] = useState(appBpm.toString());
   const [finalBeatInput, setFinalBeatInput] = useState(appFinalBeat.toString());
 
+  const bpmInputIsValid = () => {
+    const numericBpm = parseInt(bpmInput);
+    if (numericBpm < 50 || numericBpm > 120 || Number.isNaN(numericBpm)) {
+      return false;
+    } else return true;
+  };
+
+  const finalBeatInputIsValid = () => {
+    const numericFinalBeat = parseInt(finalBeatInput);
+    if (
+      numericFinalBeat < 2 ||
+      numericFinalBeat > 9 ||
+      Number.isNaN(numericFinalBeat)
+    ) {
+      return false;
+    } else return true;
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -49,8 +67,10 @@ const BeatScreen = ({
       />
       <TouchableOpacity
         onPress={() => {
-          setAppBpm(parseInt(bpmInput));
-          setAppFinalBeat(parseInt(finalBeatInput));
+          if (bpmInputIsValid() && finalBeatInputIsValid) {
+            setAppBpm(parseInt(bpmInput));
+            setAppFinalBeat(parseInt(finalBeatInput));
+          }
         }}
       >
         <Text>Save</Text>
