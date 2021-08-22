@@ -11,7 +11,7 @@ import ChordsScreen from "./screens/ChordsScreen";
 import BeatScreen from "./screens/BeatScreen";
 import { Colors } from "./shared/styles";
 import Chords from "./shared/chords";
-import { storeValue, retrieveValue } from "./storage/storageFunctions";
+import { retrieveValue } from "./storage/storageFunctions";
 
 type ScreenProps = {
   settings: {
