@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { Colors } from "../shared/styles";
 import { Audio } from "expo-av";
 
 import BeatIndicator from "../components/BeatIndicator";
 import PlaybackControls from "../components/PlaybackControls";
-import { storeValue, retrieveValue } from "../storage/storageFunctions";
 
 type Chord = {
   name: string;
