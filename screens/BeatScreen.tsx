@@ -99,15 +99,21 @@ const BeatScreen = ({
           message="Must be a number between 2 - 9"
         />
       </View>
+
       <TouchableOpacity
         onPress={() => {
-          if (bpmInputIsValid() && finalBeatInputIsValid) {
-            setAppBpm(parseInt(bpmInput));
-            setAppFinalBeat(parseInt(finalBeatInput));
-          }
+          setAppBpm(parseInt(bpmInput));
+          setAppFinalBeat(parseInt(finalBeatInput));
+        }}
+        disabled={!bpmInputIsValid() || !finalBeatInputIsValid()}
+        style={{
+          ...styles.saveButtonContainer,
+          ...(bpmInputIsValid() && finalBeatInputIsValid()
+            ? styles.saveButtonContainerActive
+            : {}),
         }}
       >
-        <Text>Save</Text>
+        <Text style={styles.saveButton}>Save</Text>
       </TouchableOpacity>
     </View>
   );
@@ -143,6 +149,21 @@ const styles = StyleSheet.create({
   invalidMessage: {
     color: "crimson",
     fontWeight: "bold",
+  },
+  saveButtonContainer: {
+    width: "80%",
+    backgroundColor: Colors.lightBrown,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 60,
+  },
+  saveButtonContainerActive: {
+    backgroundColor: Colors.brown,
+  },
+  saveButton: {
+    textAlign: "center",
+    color: Colors.beige,
+    fontSize: 30,
   },
 });
 
