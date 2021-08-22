@@ -62,39 +62,40 @@ const TabNavigator = createBottomTabNavigator(
 
 const Navigator = createAppContainer(TabNavigator);
 
+const filterChords = (selectedChordsString: string) => {
+  const selectedChordNames = selectedChordsString.split(",");
+  return Chords.filter((chordData) =>
+    selectedChordNames.includes(chordData.name)
+  );
+};
+
 export default function App() {
   const [bpm, setBpm] = useState<number | undefined>(undefined);
   const [finalBeat, setFinalBeat] = useState<number | undefined>(undefined);
-  const [selectedChords, setSelectedChords] = useState<string[] | undefined>(
-    undefined
-  );
+  const [selectedChords, setSelectedChords] = useState<
+    { name: string; path: number }[] | undefined
+  >(undefined);
 
   useEffect(() => {
     retrieveValue("BPM").then((bpm) => setBpm(parseInt(bpm as string)));
     retrieveValue("FINAL_BEAT").then((beat) =>
       setFinalBeat(parseInt(beat as string))
     );
-    retrieveValue("SELECTED_CHORDS").then((chords) => {
-      // setSelectedChords(chords?.split(","));
-      setSelectedChords(["Am", "AM"]);
+    retrieveValue("SELECTED_CHORDS").then((selectedChordsString) => {
+      const filteredChords =
+        selectedChordsString && filterChords(selectedChordsString);
+      filteredChords && setSelectedChords(filteredChords);
     });
   }, []);
 
   if (bpm && finalBeat && selectedChords) {
-    // TODO filter these based on selectedChords in state
-    const selectedChordsData = Chords.filter(
-      (chordData) =>
-        chordData.name === "AM" ||
-        chordData.name === "Am" ||
-        chordData.name === "FM"
-    );
     return (
       <Navigator
         screenProps={{
           settings: {
             bpm,
             finalBeat,
-            selectedChords: selectedChordsData,
+            selectedChords,
           },
         }}
       />
