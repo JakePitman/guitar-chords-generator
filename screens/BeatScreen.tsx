@@ -104,7 +104,9 @@ const BeatScreen = ({
         />
       </View>
 
-      <Text>{saved ? "Saved successfully" : ""}</Text>
+      <Text style={styles.savedMessage}>
+        {saved ? "Saved successfully" : ""}
+      </Text>
 
       <TouchableOpacity
         onPress={() => {
@@ -158,6 +160,10 @@ const styles = StyleSheet.create({
   },
   invalidMessage: {
     color: "crimson",
+    fontWeight: "bold",
+  },
+  savedMessage: {
+    color: "green",
     fontWeight: "bold",
   },
   saveButtonContainer: {
