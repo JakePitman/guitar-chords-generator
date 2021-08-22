@@ -30,16 +30,22 @@ const BeatScreen = ({
       <TextInput
         value={bpmInput}
         onChangeText={(val) => {
-          storeValue("BPM", val).then((res) => {
+          if (val === "" || !Number.isNaN(parseInt(val))) {
             setBpmInput(val);
-          });
+          }
         }}
+        keyboardType="numeric"
+        maxLength={3}
       />
       <TextInput
         value={finalBeatInput}
         onChangeText={(val) => {
-          setFinalBeatInput(val);
+          if (val === "" || !Number.isNaN(parseInt(val))) {
+            setFinalBeatInput(val);
+          }
         }}
+        keyboardType="numeric"
+        maxLength={1}
       />
       <TouchableOpacity
         onPress={() => {
