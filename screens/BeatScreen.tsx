@@ -16,6 +16,16 @@ type Props = {
   setAppFinalBeat: React.Dispatch<React.SetStateAction<number>>;
 };
 
+const InvalidMessage = ({
+  visible,
+  message,
+}: {
+  visible: boolean;
+  message: string;
+}) => {
+  return <Text>{visible ? message : ""}</Text>;
+};
+
 const BeatScreen = ({
   appBpm,
   setAppBpm,
@@ -23,7 +33,9 @@ const BeatScreen = ({
   setAppFinalBeat,
 }: Props) => {
   const [bpmInput, setBpmInput] = useState(appBpm.toString());
+  const [bpmInputTouched, setBpmInputTouched] = useState(false);
   const [finalBeatInput, setFinalBeatInput] = useState(appFinalBeat.toString());
+  const [finalBeatInputTouched, setFinalInputInputTouched] = useState(false);
 
   const bpmInputIsValid = () => {
     const numericBpm = parseInt(bpmInput);
@@ -54,7 +66,15 @@ const BeatScreen = ({
         }}
         keyboardType="numeric"
         maxLength={3}
+        onFocus={() => {
+          setBpmInputTouched(true);
+        }}
       />
+      <InvalidMessage
+        visible={bpmInputTouched && !bpmInputIsValid()}
+        message="Must be a number between 50 - 120"
+      />
+
       <TextInput
         value={finalBeatInput}
         onChangeText={(val) => {
@@ -64,6 +84,11 @@ const BeatScreen = ({
         }}
         keyboardType="numeric"
         maxLength={1}
+        onFocus={() => setFinalInputInputTouched(true)}
+      />
+      <InvalidMessage
+        visible={finalBeatInputTouched && !finalBeatInputIsValid()}
+        message="Must be a number between 2 - 9"
       />
       <TouchableOpacity
         onPress={() => {
