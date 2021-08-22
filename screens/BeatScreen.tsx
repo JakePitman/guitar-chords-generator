@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 
 import { storeValue } from "../storage/storageFunctions";
@@ -37,6 +38,7 @@ const BeatScreen = ({
   const [bpmInputTouched, setBpmInputTouched] = useState(false);
   const [finalBeatInput, setFinalBeatInput] = useState(appFinalBeat.toString());
   const [finalBeatInputTouched, setFinalInputInputTouched] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const bpmInputIsValid = () => {
     const numericBpm = parseInt(bpmInput);
@@ -66,6 +68,7 @@ const BeatScreen = ({
           onChangeText={(val) => {
             if (val === "" || !Number.isNaN(parseInt(val))) {
               setBpmInput(val);
+              setSaved(false);
             }
           }}
           keyboardType="numeric"
@@ -88,6 +91,7 @@ const BeatScreen = ({
           onChangeText={(val) => {
             if (val === "" || !Number.isNaN(parseInt(val))) {
               setFinalBeatInput(val);
+              setSaved(false);
             }
           }}
           keyboardType="numeric"
@@ -100,10 +104,16 @@ const BeatScreen = ({
         />
       </View>
 
+      <Text>{saved ? "Saved successfully" : ""}</Text>
+
       <TouchableOpacity
         onPress={() => {
           setAppBpm(parseInt(bpmInput));
           setAppFinalBeat(parseInt(finalBeatInput));
+          setSaved(true);
+          setBpmInputTouched(false);
+          setFinalInputInputTouched(false);
+          Keyboard.dismiss();
         }}
         disabled={!bpmInputIsValid() || !finalBeatInputIsValid()}
         style={{
