@@ -17,6 +17,8 @@ type ScreenProps = {
       finalBeat: number;
       selectedChords: { name: string; path: number }[];
     };
+    setBpm: React.Dispatch<React.SetStateAction<number>>;
+    setFinalBeat: React.Dispatch<React.SetStateAction<number>>;
   };
 };
 
@@ -41,7 +43,14 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Beat: {
-      screen: BeatScreen,
+      screen: ({ screenProps }: ScreenProps) => (
+        <BeatScreen
+          appBpm={screenProps.settings.bpm}
+          setAppBpm={screenProps.setBpm}
+          appFinalBeat={screenProps.settings.finalBeat}
+          setAppFinalBeat={screenProps.setFinalBeat}
+        />
+      ),
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <Ionicons name="musical-note" size={24} color={tintColor} />

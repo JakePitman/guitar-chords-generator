@@ -5,14 +5,6 @@ import Chords from "./shared/chords";
 import { retrieveValue } from "./storage/storageFunctions";
 import Navigator from "./components/TabNavigator";
 
-type ScreenProps = {
-  settings: {
-    bpm: number;
-    finalBeat: number;
-    selectedChordsData: { name: string; path: number }[];
-  };
-};
-
 const filterChords = (selectedChordsString: string) => {
   const selectedChordNames = selectedChordsString.split(",");
   return Chords.filter((chordData) =>
@@ -48,6 +40,8 @@ export default function App() {
             finalBeat,
             selectedChords,
           },
+          setBpm,
+          setFinalBeat,
         }}
       />
     );
