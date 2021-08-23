@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, ScrollView, Image } from "react-native";
+import { StyleSheet, View, Text, FlatList, Image } from "react-native";
 
 import Chords from "../shared/chords";
 
@@ -13,26 +13,30 @@ type Props = {
 const ChordScreen = ({ selectedChords }: Props) => {
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {Chords.map((chord) => (
-          <Image style={styles.chord} source={chord.path} />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={Chords}
+        keyExtractor={(item) => `${item.name}`}
+        renderItem={({ item }) => (
+          <Image style={styles.chord} source={item.path} />
+        )}
+        numColumns={3}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    paddingTop: 50,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   chord: {
-    height: 150,
-    width: 130,
-    borderColor: "black",
+    height: 110,
+    width: 100,
     borderWidth: 1,
+    margin: 10,
   },
 });
 
