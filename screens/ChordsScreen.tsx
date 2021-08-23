@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, FlatList, Image } from "react-native";
 
 import Chords from "../shared/chords";
+import { Colors } from "../shared/styles";
 
 type Props = {
   selectedChords: {
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.beige,
   },
   chord: {
     height: 110,
