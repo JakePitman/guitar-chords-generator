@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     alignItems: "center",
+    marginBottom: 30,
   },
   chord: {
     height: 110,
