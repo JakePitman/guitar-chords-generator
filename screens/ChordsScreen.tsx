@@ -22,7 +22,6 @@ const ChordScreen = ({ selectedChords }: Props) => {
   return (
     <View style={styles.container}>
       <FlatList
-        style={styles.list}
         data={Chords}
         keyExtractor={(item) => `${item.name}`}
         renderItem={({ item }) => (
