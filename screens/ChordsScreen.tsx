@@ -13,13 +13,19 @@ import { Colors } from "../shared/styles";
 
 type ListItemProps = {
   path: number;
+  isSelected: boolean;
 };
 
-const ListItem = ({ path }: ListItemProps) => {
+const ListItem = ({ path, isSelected }: ListItemProps) => {
   return (
     <View style={styles.listItemContainer}>
       <Image style={styles.chord} source={path} />
-      <TouchableOpacity style={styles.chordToggleButton}></TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          ...styles.chordToggleButton,
+          ...(isSelected ? styles.chordToggleButtonActive : {}),
+        }}
+      ></TouchableOpacity>
     </View>
   );
 };
@@ -32,12 +38,19 @@ type Props = {
 };
 
 const ChordScreen = ({ selectedChords }: Props) => {
+  const selectedChordNames = selectedChords.map((chord) => chord.name);
+
   return (
     <View style={styles.container}>
       <FlatList
         data={Chords}
         keyExtractor={(item) => `${item.name}`}
-        renderItem={({ item }) => <ListItem path={item.path} />}
+        renderItem={({ item }) => (
+          <ListItem
+            path={item.path}
+            isSelected={selectedChordNames.includes(item.name)}
+          />
+        )}
         numColumns={3}
       />
       <TouchableOpacity style={styles.saveButtonContainer}>
