@@ -35,7 +35,9 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Chords: {
-      screen: ChordsScreen,
+      screen: ({ screenProps }: ScreenProps) => (
+        <ChordsScreen selectedChords={screenProps.settings.selectedChords} />
+      ),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => (
           <FontAwesome name="th-list" size={24} color={tintColor} />
