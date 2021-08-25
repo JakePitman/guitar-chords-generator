@@ -47,7 +47,7 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
   const selectedChordNames = selectedChords.map((chord) => chord.name);
 
   useEffect(() => {
-    setTimeout(() => setWarningVisible(false), 3000);
+    setTimeout(() => setWarningVisible(false), 4000);
   }, [warningVisible]);
 
   const handlePress = (pressedChordName: string) => {
