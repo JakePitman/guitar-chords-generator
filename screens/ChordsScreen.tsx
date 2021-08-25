@@ -76,6 +76,9 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
         )}
         numColumns={3}
       />
+      <Text style={styles.warningMessage}>
+        Must have at least two chords selected
+      </Text>
     </View>
   );
 };
@@ -108,12 +111,12 @@ const styles = StyleSheet.create({
   chordToggleButtonActive: {
     backgroundColor: Colors.brown,
   },
-  saveButtonContainer: {
-    width: "80%",
-    backgroundColor: Colors.lightBrown,
-    borderRadius: 10,
+  warningMessage: {
+    width: "100%",
+    backgroundColor: Colors.beige,
+    textAlign: "center",
+    color: "red",
     padding: 10,
-    margin: 10,
   },
   saveButton: {
     textAlign: "center",
