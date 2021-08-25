@@ -10,16 +10,20 @@ import {
 
 import Chords from "../shared/chords";
 import { Colors } from "../shared/styles";
+import { storeValue } from "../storage/storageFunctions";
 
 type ListItemProps = {
   path: number;
   isSelected: boolean;
+  handlePress: () => void;
 };
 
-const ListItem = ({ path, isSelected }: ListItemProps) => {
+const ListItem = ({ path, isSelected, handlePress }: ListItemProps) => {
   return (
     <View style={styles.listItemContainer}>
-      <Image style={styles.chord} source={path} />
+      <TouchableOpacity onPress={handlePress}>
+        <Image style={styles.chord} source={path} />
+      </TouchableOpacity>
       <TouchableOpacity
         style={{
           ...styles.chordToggleButton,
@@ -35,10 +39,25 @@ type Props = {
     name: string;
     path: number;
   }[];
+  updateSelectedChords: (newSelectedChordsString: string) => void;
 };
 
-const ChordScreen = ({ selectedChords }: Props) => {
+const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
   const selectedChordNames = selectedChords.map((chord) => chord.name);
+
+  const handlePress = (pressedChordName: string) => {
+    let newSelectedChordsString: string[];
+    if (selectedChordNames.includes(pressedChordName)) {
+      newSelectedChordsString = selectedChordNames.filter(
+        (chordName) => chordName !== pressedChordName
+      );
+    } else {
+      newSelectedChordsString = [...selectedChordNames, pressedChordName];
+    }
+    storeValue("SELECTED_CHORDS", newSelectedChordsString.join(",")).then(() =>
+      updateSelectedChords(newSelectedChordsString.join(","))
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -49,6 +68,7 @@ const ChordScreen = ({ selectedChords }: Props) => {
           <ListItem
             path={item.path}
             isSelected={selectedChordNames.includes(item.name)}
+            handlePress={() => handlePress(item.name)}
           />
         )}
         numColumns={3}
