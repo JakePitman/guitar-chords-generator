@@ -19,16 +19,21 @@ export default function App() {
     { name: string; path: number }[] | undefined
   >(undefined);
 
+  const updateSelectedChords = (selectedChordsString: string) => {
+    const filteredChords =
+      selectedChordsString && filterChords(selectedChordsString);
+    filteredChords && setSelectedChords([...filteredChords]);
+  };
+
   useEffect(() => {
     retrieveValue("BPM").then((bpm) => setBpm(parseInt(bpm as string)));
     retrieveValue("FINAL_BEAT").then((beat) =>
       setFinalBeat(parseInt(beat as string))
     );
-    retrieveValue("SELECTED_CHORDS").then((selectedChordsString) => {
-      const filteredChords =
-        selectedChordsString && filterChords(selectedChordsString);
-      filteredChords && setSelectedChords(filteredChords);
-    });
+    retrieveValue("SELECTED_CHORDS").then(
+      (selectedChordsString) =>
+        selectedChordsString && updateSelectedChords(selectedChordsString)
+    );
   }, []);
 
   if (bpm && finalBeat && selectedChords) {
@@ -42,6 +47,7 @@ export default function App() {
           },
           setBpm,
           setFinalBeat,
+          updateSelectedChords,
         }}
       />
     );

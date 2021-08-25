@@ -19,6 +19,7 @@ type ScreenProps = {
     };
     setBpm: React.Dispatch<React.SetStateAction<number>>;
     setFinalBeat: React.Dispatch<React.SetStateAction<number>>;
+    updateSelectedChords: (newSelectedChordsString: string) => void;
   };
 };
 
@@ -36,7 +37,10 @@ const TabNavigator = createBottomTabNavigator(
     },
     Chords: {
       screen: ({ screenProps }: ScreenProps) => (
-        <ChordsScreen selectedChords={screenProps.settings.selectedChords} />
+        <ChordsScreen
+          selectedChords={screenProps.settings.selectedChords}
+          updateSelectedChords={screenProps.updateSelectedChords}
+        />
       ),
       navigationOptions: {
         tabBarIcon: ({ focused, tintColor }) => (

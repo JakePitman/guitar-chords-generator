@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -10,16 +10,20 @@ import {
 
 import Chords from "../shared/chords";
 import { Colors } from "../shared/styles";
+import { storeValue } from "../storage/storageFunctions";
 
 type ListItemProps = {
   path: number;
   isSelected: boolean;
+  handlePress: () => void;
 };
 
-const ListItem = ({ path, isSelected }: ListItemProps) => {
+const ListItem = ({ path, isSelected, handlePress }: ListItemProps) => {
   return (
     <View style={styles.listItemContainer}>
-      <Image style={styles.chord} source={path} />
+      <TouchableOpacity onPress={handlePress}>
+        <Image style={styles.chord} source={path} />
+      </TouchableOpacity>
       <TouchableOpacity
         style={{
           ...styles.chordToggleButton,
@@ -35,10 +39,34 @@ type Props = {
     name: string;
     path: number;
   }[];
+  updateSelectedChords: (newSelectedChordsString: string) => void;
 };
 
-const ChordScreen = ({ selectedChords }: Props) => {
+const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
+  const [warningVisible, setWarningVisible] = useState(false);
   const selectedChordNames = selectedChords.map((chord) => chord.name);
+
+  useEffect(() => {
+    setTimeout(() => setWarningVisible(false), 4000);
+  }, [warningVisible]);
+
+  const handlePress = (pressedChordName: string) => {
+    let newSelectedChordNames: string[];
+    if (selectedChordNames.includes(pressedChordName)) {
+      newSelectedChordNames = selectedChordNames.filter(
+        (chordName) => chordName !== pressedChordName
+      );
+    } else {
+      newSelectedChordNames = [...selectedChordNames, pressedChordName];
+    }
+    if (newSelectedChordNames.length < 2) {
+      setWarningVisible(true);
+      return;
+    }
+    storeValue("SELECTED_CHORDS", newSelectedChordNames.join(",")).then(() =>
+      updateSelectedChords(newSelectedChordNames.join(","))
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -49,13 +77,16 @@ const ChordScreen = ({ selectedChords }: Props) => {
           <ListItem
             path={item.path}
             isSelected={selectedChordNames.includes(item.name)}
+            handlePress={() => handlePress(item.name)}
           />
         )}
         numColumns={3}
       />
-      <TouchableOpacity style={styles.saveButtonContainer}>
-        <Text style={styles.saveButton}>Save</Text>
-      </TouchableOpacity>
+      {warningVisible ? (
+        <Text style={styles.warningMessage}>
+          Must have at least two chords selected
+        </Text>
+      ) : null}
     </View>
   );
 };
@@ -88,12 +119,12 @@ const styles = StyleSheet.create({
   chordToggleButtonActive: {
     backgroundColor: Colors.brown,
   },
-  saveButtonContainer: {
-    width: "80%",
-    backgroundColor: Colors.lightBrown,
-    borderRadius: 10,
+  warningMessage: {
+    width: "100%",
+    backgroundColor: Colors.beige,
+    textAlign: "center",
+    color: "red",
     padding: 10,
-    margin: 10,
   },
   saveButton: {
     textAlign: "center",
