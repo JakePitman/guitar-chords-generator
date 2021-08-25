@@ -68,6 +68,12 @@ const MainScreen = ({ settings }: Props) => {
     );
   }, [nextChord]);
 
+  useEffect(() => {
+    setNextChord(
+      selectedChords[Math.floor(Math.random() * selectedChords.length)]
+    );
+  }, [selectedChords]);
+
   const updateBeat = () => {
     if (currentBeat >= finalBeat) {
       !isMuted && playSound(tickFile, setTick);
