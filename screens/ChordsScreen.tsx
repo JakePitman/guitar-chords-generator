@@ -54,6 +54,9 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
     } else {
       newSelectedChordNames = [...selectedChordNames, pressedChordName];
     }
+    if (newSelectedChordNames.length < 2) {
+      return;
+    }
     storeValue("SELECTED_CHORDS", newSelectedChordNames.join(",")).then(() =>
       updateSelectedChords(newSelectedChordNames.join(","))
     );
