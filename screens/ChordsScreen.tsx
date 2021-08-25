@@ -46,16 +46,16 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
   const selectedChordNames = selectedChords.map((chord) => chord.name);
 
   const handlePress = (pressedChordName: string) => {
-    let newSelectedChordsString: string[];
+    let newSelectedChordNames: string[];
     if (selectedChordNames.includes(pressedChordName)) {
-      newSelectedChordsString = selectedChordNames.filter(
+      newSelectedChordNames = selectedChordNames.filter(
         (chordName) => chordName !== pressedChordName
       );
     } else {
-      newSelectedChordsString = [...selectedChordNames, pressedChordName];
+      newSelectedChordNames = [...selectedChordNames, pressedChordName];
     }
-    storeValue("SELECTED_CHORDS", newSelectedChordsString.join(",")).then(() =>
-      updateSelectedChords(newSelectedChordsString.join(","))
+    storeValue("SELECTED_CHORDS", newSelectedChordNames.join(",")).then(() =>
+      updateSelectedChords(newSelectedChordNames.join(","))
     );
   };
 
