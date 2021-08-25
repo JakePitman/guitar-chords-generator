@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -43,7 +43,12 @@ type Props = {
 };
 
 const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
+  const [warningVisible, setWarningVisible] = useState(false);
   const selectedChordNames = selectedChords.map((chord) => chord.name);
+
+  useEffect(() => {
+    setTimeout(() => setWarningVisible(false), 3000);
+  }, [warningVisible]);
 
   const handlePress = (pressedChordName: string) => {
     let newSelectedChordNames: string[];
@@ -55,6 +60,7 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
       newSelectedChordNames = [...selectedChordNames, pressedChordName];
     }
     if (newSelectedChordNames.length < 2) {
+      setWarningVisible(true);
       return;
     }
     storeValue("SELECTED_CHORDS", newSelectedChordNames.join(",")).then(() =>
@@ -76,9 +82,11 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
         )}
         numColumns={3}
       />
-      <Text style={styles.warningMessage}>
-        Must have at least two chords selected
-      </Text>
+      {warningVisible ? (
+        <Text style={styles.warningMessage}>
+          Must have at least two chords selected
+        </Text>
+      ) : null}
     </View>
   );
 };
