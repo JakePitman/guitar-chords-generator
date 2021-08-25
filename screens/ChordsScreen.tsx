@@ -73,9 +73,6 @@ const ChordScreen = ({ selectedChords, updateSelectedChords }: Props) => {
         )}
         numColumns={3}
       />
-      <TouchableOpacity style={styles.saveButtonContainer}>
-        <Text style={styles.saveButton}>Save</Text>
-      </TouchableOpacity>
     </View>
   );
 };
