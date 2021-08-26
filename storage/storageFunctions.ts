@@ -25,7 +25,7 @@ export const retrieveValue = async (valueType: ValueType) => {
       // Default values
       switch (valueType) {
         case "BPM":
-          return "60";
+          return "100";
         case "FINAL_BEAT":
           return "4";
         case "SELECTED_CHORDS":
