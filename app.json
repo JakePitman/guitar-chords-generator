@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "platforms": ["android"],
     "orientation": "portrait",
-    "icon": "./assets/F_major.png",
+    "icon": "./icon.png",
     "splash": {
       "image": "./assets/F_major.png",
       "resizeMode": "contain",
