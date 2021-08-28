@@ -19,7 +19,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.guitar-chord-generator",
+      "package": "com.guitarchordgenerator.guitarchordgenerator",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./adaptive-icon.png",
