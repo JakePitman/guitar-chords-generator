@@ -4880,6 +4880,11 @@ react-native-screens@~3.4.0:
   dependencies:
     warn-once "^0.1.0"
 
+react-native-sound-player@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/react-native-sound-player/-/react-native-sound-player-0.11.1.tgz#5df2b017c1574fe77f164c1248b24ebe1920f2ad"
+  integrity sha512-hXf0qrVWzNniYo0BWvjloGKQIi0tc81H4FghxnPmyAVG6WWx+zq3k9twrOc6Ced8b6AdxCzmJfmjb4RZH0Y+Tg==
+
 react-native-tab-view@^2.15.2:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
