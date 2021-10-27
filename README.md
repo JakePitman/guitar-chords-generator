@@ -8,7 +8,7 @@
 
 ---
 
-### Select chords for practise
+### Select the chords to practice
 
 ![chord-screen-demo](demo-gifs/chord-screen-demo.gif ".gif")
 
